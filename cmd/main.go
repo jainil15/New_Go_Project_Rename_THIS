@@ -1,7 +1,7 @@
 package main
 
 import (
-	"encoding/json"
+	"kitchen/pkg/response"
 	"log"
 	"net/http"
 	"time"
@@ -31,19 +31,7 @@ func main() {
 	router.HandleFunc(
 		"GET /health",
 		func(w http.ResponseWriter, r *http.Request) {
-			marshalled, err := json.Marshal(map[string]interface{}{
-				"server": "Running",
-			})
-			if err != nil {
-				w.WriteHeader(502)
-				w.Header().Add("Content-type", "application/json")
-				w.Write([]byte("Server not responding"))
-				return
-			}
-
-			w.Header().Add("Content-type", "application/json")
-			w.WriteHeader(200)
-			w.Write(marshalled)
+			response.ResponseHandler(w, &response.Response{Message: "Server Running"})
 			return
 		},
 	)
