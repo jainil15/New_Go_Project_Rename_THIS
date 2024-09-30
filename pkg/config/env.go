@@ -1,7 +1,6 @@
 package config
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"reflect"
@@ -43,13 +42,13 @@ func initConfig() *EnvConfig {
 		lock.Lock()
 		defer lock.Unlock()
 		if env == nil {
-			fmt.Println("init config")
+			log.Println("Init config")
 			env = getEnv()
 		} else {
-			fmt.Println("config already initialized")
+			log.Println("Config already initialized")
 		}
 	} else {
-		fmt.Println("config already initialized")
+		log.Println("Config already initialized")
 	}
 	return env
 }
