@@ -4,6 +4,7 @@ import (
 	"kitchen/pkg/response"
 	"log"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -35,6 +36,35 @@ func main() {
 			return
 		},
 	)
+	router.HandleFunc("GET /favicon.ico", func(w http.ResponseWriter, r *http.Request) {
+		im, err := os.ReadFile("web/img/doomguy.ico")
+		if err != nil {
+			log.Println("Error ->", err)
+			response.ErrorHandler(
+				w,
+				&response.Error{
+					StatusCode: http.StatusNotFound,
+					Error:      err,
+					Message:    "Favicon not found",
+				},
+			)
+			return
+		}
+		w.Header().Add("Content-type", "image/x-icon")
+		w.WriteHeader(http.StatusOK)
+		w.Write(im)
+		return
+	})
+	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		response.ErrorHandler(
+			w,
+			&response.Error{
+				StatusCode: http.StatusNotFound,
+				Message:    "Route not found",
+			},
+		)
+		return
+	})
 	server := http.Server{
 		Addr:    ":8080",
 		Handler: LoggingMiddleware(router),
