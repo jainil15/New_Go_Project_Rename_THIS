@@ -1,9 +1,9 @@
 SHELL=/bin/bash
 build:
-	@go build -o tmp/build/ cmd/main.go
+	@go build -o tmp/bin/ cmd/main.go
 
 run: build
-	@./tmp/build/main
+	@./tmp/bin/main
 
 watch:
 	@air -c .air.toml

@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"kitchen/pkg/config"
 	"kitchen/pkg/response"
 	"log"
 	"net/http"
@@ -65,10 +67,12 @@ func main() {
 		)
 		return
 	})
+	port := config.Env.Port
 	server := http.Server{
-		Addr:    ":8080",
+		Addr:    fmt.Sprintf(":%s", port),
 		Handler: LoggingMiddleware(router),
 	}
+	log.Println("Server starting on port", port)
 	if err := server.ListenAndServe(); err != nil {
 		log.Fatalf("Server Crashed")
 	}

@@ -1,6 +1,6 @@
 root = "."
 testdata_dir = "testdata"
-tmp_dir = "tmp"
+tmp_dir = "tmp/build"
 
 [build]
   args_bin = []
@@ -39,7 +39,7 @@ tmp_dir = "tmp"
   time = false
 
 [misc]
-  clean_on_exit = false
+  clean_on_exit = true 
 
 [proxy]
   app_port = 0
